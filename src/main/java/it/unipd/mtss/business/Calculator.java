@@ -18,27 +18,51 @@ public class Calculator implements Bill {
  public double getOrderPrice(List<EItem> itemsOrdered, User user) throws BillException
  {
   double total = 0.0;
-  int counter = 0;
-  double cost= 0.0;
+  int counterProc = 0;
+  int counterMouse =0;
+  double costProc= 0.0;
+  double costMouse=0.0;
   for(EItem i : itemsOrdered)
   {
    total += i.getPrice();
    if(i.getType()==itemType.Processor)
    {
-    counter++;
-    if(cost==0.0)
+    counterProc++;
+    if(costProc==0.0)
     {
-     cost=i.getPrice();
+     costProc=i.getPrice();
     }
-     else if(cost>i.getPrice())
+     else 
     {
-     cost=i.getPrice();
+     if(costProc>i.getPrice())
+     {
+      costProc=i.getPrice();
+     }
+    }
+   }
+   if(i.getType()==itemType.Mouse)
+   {
+    counterMouse++;
+    if(costMouse==0.0)
+    {
+     costMouse= i.getPrice();
+    }
+    else
+    {
+     if(costMouse>i.getPrice())
+     {
+      costMouse=i.getPrice();
+     }
     }
    }
   }
-  if(counter>=5)
+  if(counterProc>=5)
   {
-   total-=cost*0.5;
+   total-=costProc*0.5;
+  }
+  if(counterMouse>=10)
+  {
+   total-=costMouse;
   }
   return total;
  }
