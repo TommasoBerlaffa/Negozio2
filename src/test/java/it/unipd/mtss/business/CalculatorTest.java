@@ -29,5 +29,17 @@ public class CalculatorTest {
         double total = C.getOrderPrice(itemsOrdered,u);
         assertEquals(21.0D, total, 0.0D);
 	}
-
+	//If there are five or more processors, the price of cheapest one will be halved
+	@Test
+	public void Morethan5Processor_Test() throws BillException {
+		List<EItem> itemsOrdered = new ArrayList<EItem>();
+        itemsOrdered.add(new EItem(itemType.Processor,"Processore1",1.0));
+        itemsOrdered.add(new EItem(itemType.Processor,"Processore2",2.0));
+        itemsOrdered.add(new EItem(itemType.Processor,"Processore3",3.0));
+        itemsOrdered.add(new EItem(itemType.Processor,"Processore4",4.0));
+        itemsOrdered.add(new EItem(itemType.Processor,"Processore5",5.0));
+        User u=new User(4,"Gino", "Bob");
+        double total = C.getOrderPrice(itemsOrdered,u);
+        assertEquals(14.5D, total, 0.0D);
+	}
 }
