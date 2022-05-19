@@ -96,6 +96,10 @@ public class Calculator implements Bill {
     total-=costKeyBoard;
    }
   }
+  if(total>1000)
+  {
+   total*=0.9;
+  }
   return total;
  }
 }
