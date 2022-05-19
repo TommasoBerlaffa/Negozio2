@@ -122,4 +122,16 @@ public class CalculatorTest {
 	        double total = C.getOrderPrice(itemsOrdered,u);
 	        assertEquals(122.0D, total, 0.0D);
 		}
+		
+		// If the price is higher than 1000, the total get reduced by 10%
+		@Test
+		public void TotalHigherThan1000_Test() throws BillException {
+			List<EItem> itemsOrdered = new ArrayList<EItem>();
+	        itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.0));
+	        itemsOrdered.add(new EItem(itemType.Motherboard,"Motherboard Bella",990.00));
+	        itemsOrdered.add(new EItem(itemType.Processor,"Processore Bello",1000.0));
+	        User u=new User(4,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u);
+	        assertEquals(1800.0D, total, 0.0D);
+		}
 }
