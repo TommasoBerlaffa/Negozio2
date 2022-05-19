@@ -20,8 +20,10 @@ public class Calculator implements Bill {
   double total = 0.0;
   int counterProc = 0;
   int counterMouse =0;
+  int counterKeyBoard =0;
   double costProc= 0.0;
   double costMouse=0.0;
+  double costKeyBoard=0.0;
   for(EItem i : itemsOrdered)
   {
    total += i.getPrice();
@@ -55,6 +57,21 @@ public class Calculator implements Bill {
      }
     }
    }
+   if(i.getType()==itemType.Keyboard)
+   {
+    counterKeyBoard++;
+    if(costKeyBoard==0.0)
+    {
+     costKeyBoard= i.getPrice();
+    }
+    else
+    {
+     if(costKeyBoard>i.getPrice())
+     {
+      costKeyBoard=i.getPrice();
+     }
+    }
+   }
   }
   if(counterProc>=5)
   {
@@ -63,6 +80,21 @@ public class Calculator implements Bill {
   if(counterMouse>=10)
   {
    total-=costMouse;
+   if(counterMouse==counterKeyBoard)
+   {
+    total-=costKeyBoard;
+   }
+  }
+  if(counterMouse<10 && counterMouse==counterKeyBoard)
+  {
+   if(costKeyBoard>=costMouse)
+   {
+    total-=costMouse;
+   }
+   else
+   {
+    total-=costKeyBoard;
+   }
   }
   return total;
  }
