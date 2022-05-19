@@ -6,11 +6,12 @@
 package it.unipd.mtss.model;
 
 public class User {
- int Id;
+ int Id, Age;
  String Name, Surname;
 
- public User(int i, String N, String S) {
+ public User(int i, int a, String N, String S) {
   Id=i;
+  Age=a;
   Name=N;
   Surname=S;
  }
@@ -18,6 +19,10 @@ public class User {
  public int getId() {
   return Id;
  }
+ 
+ public int getAge() {
+  return Age;
+  }
 
  public String getName() {
   return Name;
