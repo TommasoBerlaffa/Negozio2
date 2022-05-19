@@ -13,9 +13,10 @@ public class UserTest {
 
  @Test
  public void Test_User() {
-  User U = new User(1,"Tommaso","Berlaffa");
+  User U = new User(1,22,"Tommaso","Berlaffa");
   assertEquals("Tommaso",U.getName());
   assertEquals("Berlaffa",U.getSurname());
   assertEquals(1,U.getId());
+  assertEquals(22,U.getAge());
  }
 }
