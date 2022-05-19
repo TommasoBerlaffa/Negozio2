@@ -5,6 +5,7 @@
 
 package it.unipd.mtss.business;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import it.unipd.mtss.business.exception.BillException;
@@ -14,8 +15,9 @@ import it.unipd.mtss.model.itemType;
 
 public class Calculator implements Bill {
 
+ int counterfree= 0;
  @Override
- public double getOrderPrice(List<EItem> itemsOrdered, User user) throws BillException
+ public double getOrderPrice(List<EItem> itemsOrdered, User user, LocalTime lt) throws BillException
  {
  if (itemsOrdered.size() > 30) {
      throw new BillException(
@@ -107,6 +109,13 @@ public class Calculator implements Bill {
   if(total<10.0)
   {
    total+=2.0;
+  }
+  LocalTime u =LocalTime.parse("18:00:00");
+  LocalTime o =LocalTime.parse("19:00:00");
+  if(lt.isAfter(u)&&lt.isBefore(o)&&counterfree<10&&user.getAge()<18)
+  {
+   total=0;
+   counterfree++;
   }
   return total;
  }
