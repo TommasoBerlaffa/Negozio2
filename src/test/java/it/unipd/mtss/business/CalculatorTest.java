@@ -134,4 +134,47 @@ public class CalculatorTest {
 	        double total = C.getOrderPrice(itemsOrdered,u);
 	        assertEquals(1800.0D, total, 0.0D);
 		}
+		
+		//If there are more than 30 items, an error message will be thrown
+		@Test(expected = BillException.class)
+		public void MoreThan30Items_Test() throws BillException {
+			List<EItem> itemsOrdered = new ArrayList<EItem>();
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
+			
+	        User u=new User(4,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u);
+		}
+		
 }
