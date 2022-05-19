@@ -177,4 +177,14 @@ public class CalculatorTest {
 	        double total = C.getOrderPrice(itemsOrdered,u);
 		}
 		
+		//If the total is below 10.0, add 2.0 to the total
+		@Test
+		public void Commission_Test() throws BillException {
+			List<EItem> itemsOrdered = new ArrayList<EItem>();
+	        itemsOrdered.add(new EItem(itemType.Processor,"Processore1",1.0));
+	        User u=new User(4,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u);
+	        assertEquals(3.0D, total, 0.0D);
+		}
+		
 }
