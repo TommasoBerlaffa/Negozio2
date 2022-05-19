@@ -17,6 +17,10 @@ public class Calculator implements Bill {
  @Override
  public double getOrderPrice(List<EItem> itemsOrdered, User user) throws BillException
  {
+ if (itemsOrdered.size() > 30) {
+     throw new BillException(
+             "Superato il limite di 30 elementi");
+ }
   double total = 0.0;
   int counterProc = 0;
   int counterMouse =0;
