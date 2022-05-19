@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.List;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import it.unipd.mtss.model.*;
@@ -25,8 +26,8 @@ public class CalculatorTest {
         itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
         itemsOrdered.add(new EItem(itemType.Keyboard,"Keyboard Bella",10.00));
         itemsOrdered.add(new EItem(itemType.Processor,"Processore Bello",0.48));
-        User u=new User(4,"Gino", "Bob");
-        double total = C.getOrderPrice(itemsOrdered,u);
+        User u=new User(4,20,"Gino", "Bob");
+        double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:15:00"));
         assertEquals(11.0D, total, 0.0D);
 	}
 	//If there are five or more processors, the price of cheapest one will be halved
@@ -39,8 +40,8 @@ public class CalculatorTest {
         itemsOrdered.add(new EItem(itemType.Processor,"Processore4",4.0));
         itemsOrdered.add(new EItem(itemType.Processor,"Processore5",5.0));
         itemsOrdered.add(new EItem(itemType.Processor,"Processore6",0.5));
-        User u=new User(4,"Gino", "Bob");
-        double total = C.getOrderPrice(itemsOrdered,u);
+        User u=new User(4,20,"Gino", "Bob");
+        double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("14:00:00"));
         assertEquals(15.25D, total, 0.0D);
 	}
 	
@@ -59,8 +60,8 @@ public class CalculatorTest {
 	        itemsOrdered.add(new EItem(itemType.Mouse,"Mouse8",10.0));
 	        itemsOrdered.add(new EItem(itemType.Mouse,"Mouse9",10.0));
 	        itemsOrdered.add(new EItem(itemType.Mouse,"Mouse0",1.0));
-	        User u=new User(4,"Gino", "Bob");
-	        double total = C.getOrderPrice(itemsOrdered,u);
+	        User u=new User(4,20,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("14:00:00"));
 	        assertEquals(90.0D, total, 0.0D);
 		}
 		
@@ -92,8 +93,8 @@ public class CalculatorTest {
 	        itemsOrdered.add(new EItem(itemType.Keyboard,"Keyboard9",10.0));
 	        itemsOrdered.add(new EItem(itemType.Keyboard,"Keyboard10",2.0));
 	        
-	        User u=new User(4,"Gino", "Bob");
-	        double total = C.getOrderPrice(itemsOrdered,u);
+	        User u=new User(4,20,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("14:00:00"));
 	        assertEquals(180.0D, total, 0.0D);
 		}
 		
@@ -118,8 +119,8 @@ public class CalculatorTest {
 	        itemsOrdered.add(new EItem(itemType.Keyboard,"Keyboard6",10.0));
 	        itemsOrdered.add(new EItem(itemType.Keyboard,"Keyboard10",1.0));
 	        
-	        User u=new User(4,"Gino", "Bob");
-	        double total = C.getOrderPrice(itemsOrdered,u);
+	        User u=new User(4,20,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("14:00:00"));
 	        assertEquals(122.0D, total, 0.0D);
 		}
 		
@@ -130,8 +131,8 @@ public class CalculatorTest {
 	        itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.0));
 	        itemsOrdered.add(new EItem(itemType.Motherboard,"Motherboard Bella",990.00));
 	        itemsOrdered.add(new EItem(itemType.Processor,"Processore Bello",1000.0));
-	        User u=new User(4,"Gino", "Bob");
-	        double total = C.getOrderPrice(itemsOrdered,u);
+	        User u=new User(4,20,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("14:00:00"));
 	        assertEquals(1800.0D, total, 0.0D);
 		}
 		
@@ -173,8 +174,8 @@ public class CalculatorTest {
 			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
 			itemsOrdered.add(new EItem(itemType.Mouse,"Mouse Bello",10.52));
 			
-	        User u=new User(4,"Gino", "Bob");
-	        double total = C.getOrderPrice(itemsOrdered,u);
+	        User u=new User(4,20,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("14:00:00"));
 		}
 		
 		//If the total is below 10.0, add 2.0 to the total
@@ -182,9 +183,38 @@ public class CalculatorTest {
 		public void Commission_Test() throws BillException {
 			List<EItem> itemsOrdered = new ArrayList<EItem>();
 	        itemsOrdered.add(new EItem(itemType.Processor,"Processore1",1.0));
-	        User u=new User(4,"Gino", "Bob");
-	        double total = C.getOrderPrice(itemsOrdered,u);
+	        User u=new User(4,20,"Gino", "Bob");
+	        double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("20:00:00"));
 	        assertEquals(3.0D, total, 0.0D);
 		}
 		
+		//If the order is between 18:00 and 19:00 and user is under age, 10 random orders will be set to 0
+		@Test
+		public void FreeGift_Test() throws BillException {
+			List<EItem> itemsOrdered = new ArrayList<EItem>();
+			itemsOrdered.add(new EItem(itemType.Processor,"Processore1",400.0));
+			User u=new User(4,15,"Gino", "Bob");
+			double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+			assertEquals(0.0D, total, 0.0D);
+		}
+		
+		//If the order is between 18:00 and 19:00 and user is under age, 10 random orders will be set to 0
+		@Test
+	    public void TooManyFreeGifts_Test() throws BillException {
+		List<EItem> itemsOrdered = new ArrayList<EItem>();
+		itemsOrdered.add(new EItem(itemType.Processor,"Processore1",200.0));
+		User u=new User(4,15,"Gino", "Bob");
+		double total = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total1 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total2 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total3 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total4 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total5 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total6 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total7 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total8 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total9 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		double total10 = C.getOrderPrice(itemsOrdered,u,LocalTime.parse("18:02:00"));
+		assertEquals(200.0D, total10, 0.0D);
+		}
 }
