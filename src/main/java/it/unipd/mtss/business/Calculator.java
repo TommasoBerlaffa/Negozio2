@@ -104,6 +104,10 @@ public class Calculator implements Bill {
   {
    total*=0.9;
   }
+  if(total<10.0)
+  {
+   total+=2.0;
+  }
   return total;
  }
 }
